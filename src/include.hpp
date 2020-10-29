@@ -11,3 +11,5 @@ pros::Motor LfrontIntake (5, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCO
 pros::Motor RfrontIntake (6, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
 pros::Motor flywheel (19, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES); //correct as of 10/28/2020
 pros::Motor mainIntake (11, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES); //correct as of 10/28/2020
+pros::ADIEncoder flywheelEncoder (1, 2, false); // ADI ports A and B
+pros::ADIDigitalIn intakeLimitSwitch (3); // ADI port C
