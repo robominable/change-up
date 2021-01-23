@@ -1,23 +1,29 @@
 #include "include.hpp"
 
+//USING OKAPI
 
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
-}
-
+std::shared_ptr<ChassisController> drive;
 
 void initialize() {
+	Logger::setDefaultLogger( //log output to pros terminal
+		std::make_shared<Logger>(
+			TimeUtilFactory::createDefault().getTimer(),
+			"/ser/sout",
+			Logger::LogLevel::debug
+		)
+	);
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Robominable | 4454A");
-	pros::lcd::set_text(2, "Select Autonomous Below");
-
-	pros::lcd::register_btn1_cb(on_center_button);
+	drive = ChassisControllerBuilder()
+		.withMotors(
+			1, //  front left
+			-2, // front right (reversed)
+			-3, // back right (reversed)
+			4 //   back left
+		) //                green cartridge           wheel diam  11.5in wheelbase
+		.withDimensions({AbstractMotor::gearset::green}, {{4_in, 11.5_in}, imev5GreenTPR})
+		.withOdometry()
+		.buildOdometry();
 }
 
 /**
@@ -50,15 +56,6 @@ void autonomous() {
 
 void opcontrol() {
 	while (true) {
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
 		
-		int leftJoystick = master.get_analog(ANALOG_LEFT_Y);
-		int rightJoystick = master.get_analog(ANALOG_RIGHT_Y);
-
-		FLdrive = leftJoystick;
-		FRdrive = rightJoystick;
-		pros::delay(10);
 	}
 }
