@@ -62,6 +62,9 @@ void opcontrol() {
 						controller.getAnalog(ControllerAnalog::leftX),
 						controller.getAnalog(ControllerAnalog::rightX)
 		);
+
+		
+
 		pros::delay(15);
 	}
 }
