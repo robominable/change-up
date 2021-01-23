@@ -3,6 +3,7 @@
 //USING OKAPI
 
 std::shared_ptr<ChassisController> drive;
+okapi::Controller controller;
 
 void initialize() {
 	Logger::setDefaultLogger( //log output to pros terminal
@@ -56,6 +57,11 @@ void autonomous() {
 
 void opcontrol() {
 	while (true) {
-		
+		auto xModel = std::dynamic_pointer_cast<XDriveModel>(drive->getModel());
+		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftY), 
+						controller.getAnalog(ControllerAnalog::leftX),
+						controller.getAnalog(ControllerAnalog::rightX)
+		);
+		pros::delay(15);
 	}
 }
