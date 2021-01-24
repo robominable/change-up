@@ -1,23 +1,20 @@
 #include "include.hpp"
-#include "filesys.hpp"
 
 //USING OKAPI
-
-
 
 std::shared_ptr<ChassisController> drive;
 okapi::Controller controller;
 
 void initialize() {
-	Logger::setDefaultLogger( //log output to pros terminal
+	/*Logger::setDefaultLogger( //log output to pros terminal
 		std::make_shared<Logger>(
 			TimeUtilFactory::createDefault().getTimer(),
 			"/ser/sout",
 			Logger::LogLevel::debug
 		)
-	);
-	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Robominable | 4454A");
+	);*/
+	//pros::lcd::initialize();
+	//pros::lcd::set_text(1, "Robominable | 4454A");
 	drive = ChassisControllerBuilder()
 		.withMotors(
 			1, //  front left
