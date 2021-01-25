@@ -17,10 +17,10 @@ void initialize() {
 	//pros::lcd::set_text(1, "Robominable | 4454A");
 	drive = ChassisControllerBuilder()
 		.withMotors(
-			1, //  front left
-			-2, // front right (reversed)
-			-3, // back right (reversed)
-			4 //   back left
+			10, //  front left
+			-3, // front right (reversed)
+			-6, // back right (reversed)
+			9 //   back left
 		) //                green cartridge           wheel diam  11.5in wheelbase
 		.withDimensions({AbstractMotor::gearset::green}, {{4_in, 11.5_in}, imev5GreenTPR})
 		.withOdometry()
