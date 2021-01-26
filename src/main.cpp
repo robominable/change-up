@@ -4,6 +4,7 @@
 
 std::shared_ptr<ChassisController> drive;
 okapi::Controller controller;
+auto opticalHue = OpticalSensor(15);
 
 void initialize() {
 	/*Logger::setDefaultLogger( //log output to pros terminal
@@ -63,7 +64,7 @@ void opcontrol() {
 						controller.getAnalog(ControllerAnalog::rightX)
 		);
 
-
+		
 
 		pros::delay(15);
 	}
