@@ -31,6 +31,9 @@ void initialize() {
 		.withOdometry()
 		.buildOdometry();
 		upperIntake.setGearing(okapi::Motor::gearset::red);
+		middleIntake.setGearing(okapi::Motor::gearset::green);
+		Lintake.setGearing(okapi::Motor::gearset::green);
+		Rintake.setGearing(okapi::Motor::gearset::green);
 }
 
 /**
