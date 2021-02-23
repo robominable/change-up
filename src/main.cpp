@@ -67,26 +67,35 @@ void autonomous() {
 void opcontrol() {
 	while (true) {
 		auto xModel = std::dynamic_pointer_cast<XDriveModel>(drive->getModel());
-		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftY),
-						controller.getAnalog(ControllerAnalog::leftX),
+		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftX),
+						controller.getAnalog(ControllerAnalog::leftY),
 						controller.getAnalog(ControllerAnalog::rightX)
 		);
 
 		if(controller.getDigital(okapi::ControllerDigital::R1)){
 			upperIntake.moveVoltage(12000);
-			//middleIntake.moveVoltage(12000);
+			middleIntake.moveVoltage(12000);
 		}
 		else if(controller.getDigital(okapi::ControllerDigital::R2)){
 			upperIntake.moveVoltage(-12000);
-			//middleIntake.moveVoltage(12000);
+			middleIntake.moveVoltage(12000);
 		}
 		else{
 			upperIntake.moveVoltage(0);
-			//middleIntake.moveVoltage(0);
+			middleIntake.moveVoltage(0);
 		}
 
 		if(controller.getDigital(okapi::ControllerDigital::L1)){
-
+			Lintake.moveVoltage(12000);
+			Rintake.moveVoltage(-12000);
+		}
+		else if(controller.getDigital(okapi::ControllerDigital::L2)){
+			Lintake.moveVoltage(-12000);
+			Rintake.moveVoltage(12000);
+		}
+		else{
+			Lintake.moveVoltage(0);
+			Rintake.moveVoltage(0);
 		}
 
 		pros::delay(15);
