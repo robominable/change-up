@@ -5,6 +5,10 @@
 std::shared_ptr<ChassisController> drive;
 okapi::Controller controller;
 auto opticalHue = OpticalSensor(15);
+okapi::Motor upperIntake(-19);
+okapi::Motor middleIntake(-11);
+okapi::Motor Lintake(14);
+okapi::Motor Rintake(18);
 
 void initialize() {
 	/*Logger::setDefaultLogger( //log output to pros terminal
@@ -26,6 +30,7 @@ void initialize() {
 		.withDimensions({AbstractMotor::gearset::green}, {{4_in, 11.5_in}, imev5GreenTPR})
 		.withOdometry()
 		.buildOdometry();
+		upperIntake.setGearing(okapi::Motor::gearset::red);
 }
 
 /**
@@ -59,12 +64,27 @@ void autonomous() {
 void opcontrol() {
 	while (true) {
 		auto xModel = std::dynamic_pointer_cast<XDriveModel>(drive->getModel());
-		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftY), 
+		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftY),
 						controller.getAnalog(ControllerAnalog::leftX),
 						controller.getAnalog(ControllerAnalog::rightX)
 		);
 
-		
+		if(controller.getDigital(okapi::ControllerDigital::R1)){
+			upperIntake.moveVoltage(12000);
+			//middleIntake.moveVoltage(12000);
+		}
+		else if(controller.getDigital(okapi::ControllerDigital::R2)){
+			upperIntake.moveVoltage(-12000);
+			//middleIntake.moveVoltage(12000);
+		}
+		else{
+			upperIntake.moveVoltage(0);
+			//middleIntake.moveVoltage(0);
+		}
+
+		if(controller.getDigital(okapi::ControllerDigital::L1)){
+
+		}
 
 		pros::delay(15);
 	}
