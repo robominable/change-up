@@ -10,6 +10,8 @@ okapi::Motor middleIntake(-11);
 okapi::Motor Lintake(14);
 okapi::Motor Rintake(18);
 
+
+
 void initialize() {
 	/*Logger::setDefaultLogger( //log output to pros terminal
 		std::make_shared<Logger>(
@@ -22,10 +24,10 @@ void initialize() {
 	//pros::lcd::set_text(1, "Robominable | 4454A");
 	drive = ChassisControllerBuilder()
 		.withMotors(
-			10, //  front left
-			-3, // front right (reversed)
-			-6, // back right (reversed)
-			9 //   back left
+			9, //  front left
+			-6, // front right (reversed)
+			-3, // back right (reversed)
+			10 //   back left
 		) //                green cartridge           wheel diam  11.5in wheelbase
 		.withDimensions({AbstractMotor::gearset::green}, {{4_in, 11.5_in}, imev5GreenTPR})
 		.withOdometry()
@@ -65,18 +67,22 @@ void autonomous() {
 
 
 void opcontrol() {
+	okapi::ControllerButton R1(ControllerDigital::R1);
+	okapi::ControllerButton R2(ControllerDigital::R2);
+	okapi::ControllerButton L1(ControllerDigital::L1);
+	okapi::ControllerButton L2(ControllerDigital::L2);
 	while (true) {
 		auto xModel = std::dynamic_pointer_cast<XDriveModel>(drive->getModel());
-		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftX),
-						controller.getAnalog(ControllerAnalog::leftY),
+		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftY),
+						controller.getAnalog(ControllerAnalog::leftX),
 						controller.getAnalog(ControllerAnalog::rightX)
 		);
 
-		if(controller.getDigital(okapi::ControllerDigital::R1)){
+		if(R1.isPressed()){
 			upperIntake.moveVoltage(12000);
 			middleIntake.moveVoltage(12000);
 		}
-		else if(controller.getDigital(okapi::ControllerDigital::R2)){
+		else if(R2.isPressed()){
 			upperIntake.moveVoltage(-12000);
 			middleIntake.moveVoltage(12000);
 		}
@@ -85,11 +91,11 @@ void opcontrol() {
 			middleIntake.moveVoltage(0);
 		}
 
-		if(controller.getDigital(okapi::ControllerDigital::L1)){
+		if(L1.isPressed()){
 			Lintake.moveVoltage(12000);
 			Rintake.moveVoltage(-12000);
 		}
-		else if(controller.getDigital(okapi::ControllerDigital::L2)){
+		else if(L2.isPressed()){
 			Lintake.moveVoltage(-12000);
 			Rintake.moveVoltage(12000);
 		}
@@ -98,6 +104,6 @@ void opcontrol() {
 			Rintake.moveVoltage(0);
 		}
 
-		pros::delay(15);
+		pros::delay(10);
 	}
 }
